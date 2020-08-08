@@ -19,7 +19,7 @@ class CospaItem:
         - sizes (array of object size-info tuple, if items have different size e.g. T-shirts)
     """
     def __init__(self, id):
-        self.id = id
+        self.id = str(id)
         self.name = ''
         self.price = None
         self.jan = ''
