@@ -35,10 +35,10 @@ The `cospa_get_item` function scrapes the product page with the given Item ID an
 | name | string | Item name |
 | website | string | Item Page URL |
 | jan | string | JAN (Japanese Article Number) |
-| price | integer | Item price |
+| price | integer | Item price in Japanese yen |
 | image_urls | list | Item image URLs |
 | sales_info | list | Item information related to sales (e.g. release dates, event information) |
-| comments | list | Item comments/description |
+| comments | list | Item comments and description |
 | sizes | list | Item sizes information (e.g. S/M/L/XL sizes for T-shirts) |
 
 ```buildoutcfg
