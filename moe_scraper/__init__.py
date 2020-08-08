@@ -1,2 +1,1 @@
-from .util import *
-from .constants import *
+from .cospa import cospa_download_image

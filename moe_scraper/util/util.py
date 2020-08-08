@@ -27,7 +27,7 @@ def read_config_file():
     return result
 
 
-def get_response(url, headers=None, decode=False, charset=None):
+def get_response(url, headers=None, decode=True, charset=None):
     response = None
     if not headers:
         headers = {'User-Agent': USER_AGENT}
@@ -46,7 +46,7 @@ def get_response(url, headers=None, decode=False, charset=None):
     return response
 
 
-def get_soup(url, headers=None, decode=False, charset=None, parser='html.parser'):
+def get_soup(url, headers=None, decode=True, charset=None, parser='html.parser'):
     response = get_response(url, headers, decode, charset)
     if response:
         try:
@@ -75,7 +75,7 @@ def post_response(url, headers=None, data=None, decode=False, charset=None):
     return response
 
 
-def download_image(url, name, output, headers=None, log_path=''):
+def download_image(url, name, output, log_path='', headers=None):
     """
     Downloads image from the given URL
     :param url: URL of the image to be downloaded
@@ -121,6 +121,7 @@ def download_image(url, name, output, headers=None, log_path=''):
                 for chunk in r.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
+            print('Downloaded ' + url)
 
             # Create log
             if len(log_path) > 0:
