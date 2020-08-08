@@ -149,3 +149,33 @@ def is_image_exists(filepath, has_type=False):
             return True
     return False
 
+
+def get_numbers_from_expression(expr):
+    results = []
+
+    valid_chars = "0123456789-,"
+
+    for i in expr:
+        if i not in valid_chars:
+            return []
+
+    split1 = expr.split(",")
+    for ex in split1:
+        split2 = ex.split("-")
+        if len(split2) == 1:
+            try:
+                results.append(int(split2[0]))
+            except:
+                return []
+        elif len(split2) == 2:
+            try:
+                first_num = int(split2[0])
+                last_num = int(split2[1])
+                for j in range(first_num, last_num + 1, 1):
+                    results.append(j)
+            except:
+                return []
+        else:
+            return []
+    return results
+

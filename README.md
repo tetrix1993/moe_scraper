@@ -23,6 +23,9 @@ Cospa has several domains, but the code works for all domains. The domains are:
 * http://trantrip.com/
 * http://www.cospa.com/videsta/
 
+### Scrape Information from Cospa Item Page
+To be filled
+
 ### Download Images from Product Page
 You can use the `cospa_download_image` function to download images of the products. The item id can be found in the URL of the item page.
 
