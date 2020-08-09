@@ -13,6 +13,62 @@ pip install bs4
 All configuration settings can be found in the `app.config`. You can change the output directory here.
 
 ## Usage
+### AmiAmi
+<details>
+<summary>Click to expand...</summary>
+
+[AmiAmi](https://www.amiami.jp/) is a Japanese online retailer selling anime figures, merchandises, printed materials and media. Each item has an item code which consists of a category name and a code. For example, the product page `https://www.amiami.jp/top/detail/detail?gcode=FIGURE-611316` item code is `FIGURE-611316` where the category is `FIGURE` and code is `611316`.
+
+AmiAmi has an English site, which also uses the same item code.
+
+### function amiami_download_images
+The `amiami_download_images` function downloads the images of the products with the given category and code. It accepts three arguments:
+* `item_ids` - List of product code (either string or integer)
+* `category` - Category name the product belongs to
+* `save_jan_code` - (Optional) False by default - If `True`, saves the images with the JAN (Japanese Article Number) as their name. If `False`, saves the images using the product code as the name instad.
+
+Constant variables are provided for the various types of category used in AmiAmi:
+
+| Category | Variable |
+| --- | --- |
+| CARD | AMIAMI_CATEGORY_CARD
+| GAME |AMIAMI_CATEGORY_GAME |
+| FIGURE |AMIAMI_CATEGORY_FIGURE |
+| GOODS |AMIAMI_CATEGORY_GOODS |
+| LTD-DVD |AMIAMI_CATEGORY_LTD_DVD |
+| LTD-ETC |AMIAMI_CATEGORY_LTD_ETC |
+| LTD-FIG |AMIAMI_CATEGORY_LTD_FIG |
+| LTD-PCG |AMIAMI_CATEGORY_LTD_PCG |
+| MED-BOOK |AMIAMI_CATEGORY_MED_BOOK |
+| MED-CD2 |AMIAMI_CATEGORY_MED_CD2 |
+| MED-DVD2 |AMIAMI_CATEGORY_MED_DVD2 |
+| RAIL |AMIAMI_CATEGORY_RAIL |
+| TOY-SCL2 |AMIAMI_CATEGORY_TOY_SCL2 |
+| TOY-SCL3 |AMIAMI_CATEGORY_TOY_SCL3 |
+
+Example:
+```python
+import moe_scraper as ms
+
+# Download images of products of with item codes:
+# GOODS-00389993, GOODS-00389994, GOODS-00389995, GOODS-00390411
+ms.amiami_download_images([389993, 389994, 389995, 390411], ms.AMIAMI_CATEGORY_GOODS)
+```
+
+### function amiami_download_images_expr
+The `amiami_download_images_expr` has the same logic as `amiami_download_images`, but accepts `expr` instead:
+
+Example:
+```python
+import moe_scraper as ms
+
+# Download images of products of with item codes:
+# GOODS-00389993, GOODS-00389994, GOODS-00389995, GOODS-00390411
+ms.amiami_download_images_expr('389993-389995,390411', ms.AMIAMI_CATEGORY_GOODS)
+```
+
+</details>
+
 ### Cospa
 <details>
 <summary>Click to expand...</summary>
@@ -47,29 +103,35 @@ The function returns a dictionary:
 | comments | list | Item comments and description |
 | sizes | list | Item sizes information (e.g. S/M/L/XL sizes for T-shirts) |
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.cospa_get_item(100719)
+
 # Get information of item with ID 100719.
+moe_scraper.cospa_get_item(100719)
 ```
 
 #### function cospa_get_items -> list(dictionary)
 The `cospa_get_items` function is similar to `cospa_get_item` function, but accepts an array of Item IDs instead of just one and returns a list of dictionary.
 * `item_ids` - Array of ItemIDs (can be array of string or integer)
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.cospa_get_items([100719, 101021, 100407, 100408, 100409])
+
 # Get information of items with ID 100719, 101021, 100407, 100408, 100409
+moe_scraper.cospa_get_items([100719, 101021, 100407, 100408, 100409])
 ```
 
 #### function cospa_get_items_expr -> list(dictionary)
 The `cospa_get_items_expr` function has the same logic as `cospa_get_items` function but accepts the expression `expr`.
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.cospa_get_items_expr('100719,101021,100407-100409')
+
 # Get information of items with ID 100719, 101021, 100407, 100408, 100409
+moe_scraper.cospa_get_items_expr('100719,101021,100407-100409')
 ```
 
 #### function cospa_download_images
@@ -79,18 +141,23 @@ The `cospa_download_images` function accepts two arguments:
 
 The output will be saved in the directory that is specified at `COSPA_OUTPUT_IMAGE_FOLDER` in `app.config`.
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.cospa_download_images([100719, 101021, 100407, 100408, 100409], True)
+
 # Download images of products of item ID 100719, 101021, 100407, 100408 and 100409
+moe_scraper.cospa_download_images([100719, 101021, 100407, 100408, 100409], True)
 ```
 
 #### function cospa_download_images_expr
 The `cospa_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
-```buildoutcfg
+
+Example:
+```python
 import moe_scraper
-moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
+
 # Download images of products of item ID 100719, 101021, 100407, 100408 and 100409
+moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
 ```
 </details>
 
@@ -129,29 +196,35 @@ The function returns a dictionary:
 | other_info | dictionary | Other product information that is found on the website but not recognized by the scraper will be listed here as a dictionary |
 | related_items | list(dictionary) | Related items to the item will be listed here as list of dictionary. Each dictonary has the item ID `id` and name `name`. |
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
+
+# Get information of item with ID 9900
 moe_scraper.goodsmile_get_item(9900)
-# Get information of item with ID 9900.
 ```
 
 #### function goodsmile_get_items -> list(dictionary)
 The `goodsmile_get_items` function is similar to `goodsmile_get_item` function, but accepts an array of Item IDs instead of just one and returns a list of dictionary.
 * `item_ids` - Array of ItemIDs (can be array of string or integer)
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.goodsmile_get_items([9893, 9894, 9895, 9900])
+
 # Get information of items with ID 9893, 9894, 9895, 9900
+moe_scraper.goodsmile_get_items([9893, 9894, 9895, 9900])
 ```
 
 #### function goodsmile_get_items_expr -> list(dictionary)
 The `goodsmile_get_items_expr` function has the same logic as `goodsmile_get_items` function but accepts the expression `expr`.
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.goodsmile_get_items_expr('9893-9895,9900')
+
 # Get information of items with ID 9893, 9894, 9895, 9900
+moe_scraper.goodsmile_get_items_expr('9893-9895,9900')
 ```
 
 #### function goodsmile_download_images
@@ -160,18 +233,23 @@ The `goodsmile_download_images` function accepts one argument:
 
 The output will be saved in the directory that is specified at `GOODSMILE_OUTPUT_IMAGE_FOLDER` in `app.config`.
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
-moe_scraper.goodsmile_download_images([9893, 9894, 9895, 9900])
+
 # Download images of products of item ID 9893, 9894, 9895, 9900
+moe_scraper.goodsmile_download_images([9893, 9894, 9895, 9900])
 ```
 
 #### function goodsmile_download_images_expr
 The `goodsmile_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
-```buildoutcfg
+
+Example:
+```python
 import moe_scraper
-moe_scraper.goodsmile_download_images_expr('9893-9895,9900')
+
 # Download images of products of item ID 9893, 9894, 9895, 9900
+moe_scraper.goodsmile_download_images_expr('9893-9895,9900')
 ```
 
 #### function goodsmile_download_images_front_page
@@ -181,7 +259,8 @@ The `goodsmile_download_images_front_page` function downloads all the items unde
 
 The output will be saved in the directory that is specified at `GOODSMILE_OUTPUT_IMAGE_FOLDER` in `app.config`.
 
-```buildoutcfg
+Example:
+```python
 import moe_scraper
 
 # Download images of figures on the English website's front page
