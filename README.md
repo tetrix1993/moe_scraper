@@ -16,6 +16,7 @@ All configuration settings can be found in the `app.config`. You can change the 
 ### Cospa
 <details>
 <summary>Click to expand...</summary>
+
 [Cospa](http://cospa.co.jp/) is a Japanese company that specializes in anime merchandises, focusing on apparels (e.g. T-shirt, bags), linens products (e.g. towels, dakimakura) and occasionally wall scrolls, accessories, key chains, smartphone covers, mugs etc.
 
 Cospa has several domains, but the code works for all domains. The domains are:
@@ -93,6 +94,7 @@ moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
 ### Good Smile Company
 <details>
 <summary>Click to expand...</summary>
+
 [Good Smile Company](https://www.goodsmile.info) is a Japanese company specializing in anime figures and nendoroids. It also sell goods as well. It has a [English website](https://www.goodsmile.info/en/).
 
 The Item ID can be found in the product page URL. For example, `9900` in `https://www.goodsmile.info/en/product/9900/POP+UP+PARADE+Senku+Ishigami.html`.
