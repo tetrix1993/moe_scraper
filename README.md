@@ -156,7 +156,7 @@ The output will be saved in the directory that is specified at `GOODSMILE_OUTPUT
 
 ```buildoutcfg
 import moe_scraper
-moe_scraper.cospa_download_images([9893, 9894, 9895, 9900])
+moe_scraper.goodsmile_download_images([9893, 9894, 9895, 9900])
 # Download images of products of item ID 9893, 9894, 9895, 9900
 ```
 
@@ -164,7 +164,7 @@ moe_scraper.cospa_download_images([9893, 9894, 9895, 9900])
 The `goodsmile_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
 ```buildoutcfg
 import moe_scraper
-moe_scraper.cospa_download_images_expr('9893-9895,9900')
+moe_scraper.goodsmile_download_images_expr('9893-9895,9900')
 # Download images of products of item ID 9893, 9894, 9895, 9900
 ```
 </details>
