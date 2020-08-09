@@ -32,6 +32,8 @@ The item ID can be obtained from the URL of the product page. For example, `1007
 The `cospa_get_item` function scrapes the product page with the given Item ID and returns a dictonary. It accepts one argument:
 * `item_id` - Item ID of the product as a string or integer
 
+The function returns a dictionary:
+
 | Key | Type | Description |
 | --- | --- | --- |
 | id | string | Item ID |
@@ -104,6 +106,8 @@ The `goodsmile_get_item` function scrapes the product page with the given Item I
 * `item_id` - Item ID of the product as a string or integer
 * `is_english` - (Optional) False by default. Retrieves item information from the English website if set as True, otherwise retrieves from Japanese website. Note: Japanese website may contain more items than English ones.
 
+The function returns a dictionary:
+
 | Key | Type | Description |
 | --- | --- | --- |
 | id | string | Item ID |
@@ -166,5 +170,22 @@ The `goodsmile_download_images_expr` function has the same logic, but expression
 import moe_scraper
 moe_scraper.goodsmile_download_images_expr('9893-9895,9900')
 # Download images of products of item ID 9893, 9894, 9895, 9900
+```
+
+#### function goodsmile_download_images_front_page
+The `goodsmile_download_images_front_page` function downloads all the items under 'Latest Figure Releases' or 'Latest Merch' on the front page of the website. The function accepts two optional arguments:
+* `is_figure` - (Optional) True by default. Specify `True` to download only figures. Specify `False` to download only merchandises.
+* `is_english` - (Optional) False by default. Specify `True` to download based on the English website's front page. Specify `False` for the Japanese website.
+
+The output will be saved in the directory that is specified at `GOODSMILE_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+```buildoutcfg
+import moe_scraper
+
+# Download images of figures on the English website's front page
+moe_scraper.goodsmile_download_images_front_page(is_figure=True, is_english=True)
+
+# Download images of merchandises on the Japanese website's front page
+moe_scraper.goodsmile_download_images_front_page(is_figure=False, is_english=False)
 ```
 </details>

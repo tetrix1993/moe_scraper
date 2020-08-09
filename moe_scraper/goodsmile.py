@@ -1,5 +1,7 @@
 from moe_scraper.util import *
 
+GOODSMILE_FRONT_PAGE_JP = 'https://www.goodsmile.info'
+GOODSMILE_FRONT_PAGE_EN = 'https://www.goodsmile.info/en'
 GOODSMILE_ITEM_PAGE_JP = 'https://www.goodsmile.info/ja/product/'
 GOODSMILE_ITEM_PAGE_EN = 'https://www.goodsmile.info/en/product/'
 GOODSMILE_ITEM_PAGE_TEMPLATE_JP = GOODSMILE_ITEM_PAGE_JP + '%s'
@@ -95,7 +97,6 @@ def goodsmile_download_images(item_ids):
     config = read_config_file()
     if GOODSMILE_OUTPUT_IMAGE_FOLDER not in config:
         print('%s not found in app.config' % GOODSMILE_OUTPUT_IMAGE_FOLDER)
-        return
     if IMAGE_DOWNLOAD_LOG_PATH in config:
         log_path = config[IMAGE_DOWNLOAD_LOG_PATH]
     else:
@@ -103,6 +104,10 @@ def goodsmile_download_images(item_ids):
     image_output = config[GOODSMILE_OUTPUT_IMAGE_FOLDER]
     try:
         for item_id in item_ids:
+            if is_image_exists(image_output + '/' + str(item_id)) or \
+                    is_image_exists(image_output + '/' + str(item_id) + '_1') or \
+                    is_image_exists(image_output + '/' + str(item_id) + '_01'):
+                continue
             item_url = GOODSMILE_ITEM_PAGE_TEMPLATE_JP % str(item_id)
             soup = get_soup(item_url)
             if soup:
@@ -115,7 +120,6 @@ def goodsmile_download_images(item_ids):
                     download_image(image_urls[i], image_name, image_output, log_path)
     except Exception as e:
         print(e)
-        return
 
 
 def goodsmile_download_images_expr(expr):
@@ -126,6 +130,35 @@ def goodsmile_download_images_expr(expr):
     """
     item_ids = get_numbers_from_expression(expr)
     goodsmile_download_images(item_ids)
+
+
+def goodsmile_download_images_front_page(is_figure=True, is_english=False):
+    if is_english:
+        soup = get_soup(GOODSMILE_FRONT_PAGE_EN)
+    else:
+        soup = get_soup(GOODSMILE_FRONT_PAGE_JP)
+    if soup:
+        date_rows = soup.find_all('div', class_='dateRow')
+        if len(date_rows) == 2:
+            if is_figure:
+                row_num = 0
+            else:
+                row_num = 1
+            item_ids = []
+            for sibling in date_rows[row_num].next_siblings:
+                if sibling.name is None:
+                    continue
+                elif sibling.name == 'a':
+                    if sibling.has_attr('href'):
+                        item_url = GOODSMILE_FRONT_PAGE_JP + sibling['href']
+                        item_id = goodsmile_get_item_id_from_url(item_url, is_english)
+                        if len(item_id) > 0:
+                            item_ids.append(item_id)
+                else:
+                    break
+            goodsmile_download_images(item_ids)
+    else:
+        print('Unable to process page')
 
 
 def goodsmile_get_description(soup):
@@ -280,24 +313,28 @@ def goodsmile_get_related_items(soup, is_english):
             item = {'id': '', 'name': ''}
             a_tag = li_tag.find('a')
             if a_tag and a_tag.has_attr('href'):
-                if is_english and GOODSMILE_ITEM_PAGE_EN in a_tag['href']:
-                    try:
-                        item_id = str(int(a_tag['href'].replace(GOODSMILE_ITEM_PAGE_EN, '').split('/')[0]))
-                        item['id'] = item_id
-                    except:
-                        pass
-                elif GOODSMILE_ITEM_PAGE_JP in a_tag['href']:
-                    try:
-                        item_id = str(int(a_tag['href'].replace(GOODSMILE_ITEM_PAGE_JP, '').split('/')[0]))
-                        item['id'] = item_id
-                    except:
-                        pass
+                item['id'] = goodsmile_get_item_id_from_url(a_tag['href'], is_english)
             img_tag = li_tag.find('img')
             if img_tag and img_tag.has_attr('alt') and len(img_tag['alt']) > 0:
                 item['name'] = img_tag['alt']
             if len(item['id']) > 0 or len(item['name']) > 0:
                 items.append(item)
     return items
+
+
+def goodsmile_get_item_id_from_url(item_url, is_english):
+    item_id = ''
+    if is_english and GOODSMILE_ITEM_PAGE_EN in item_url:
+        try:
+            item_id = str(int(item_url.replace(GOODSMILE_ITEM_PAGE_EN, '').split('/')[0]))
+        except:
+            pass
+    elif GOODSMILE_ITEM_PAGE_JP in item_url:
+        try:
+            item_id = str(int(item_url.replace(GOODSMILE_ITEM_PAGE_JP, '').split('/')[0]))
+        except:
+            pass
+    return item_id
 
 
 def goodsmile_get_other_info(soup, is_english):
