@@ -1,5 +1,5 @@
 # Moe Scraper
-Scrape anime-related stuff from websites.
+Scrape anime-related stuff from websites. It can be used to download images and gathering information from official anime figures/merchandises websites quickly for adding new entries to [MyFigureCollection](http://myfigurecollection.net/).
 ## Setting Up
 1. Download and install the latest version of [Python](https://www.python.org/downloads/)
 2. When installing Python, make sure to check 'Add Python 3.X to PATH'
@@ -16,6 +16,7 @@ All configuration settings can be found in the `app.config`. You can change the 
 ### Cospa
 <details>
 <summary>Click to expand...</summary>
+<br/>
 
 [Cospa](http://cospa.co.jp/) is a Japanese company that specializes in anime merchandises, focusing on apparels (e.g. T-shirt, bags), linens products (e.g. towels, dakimakura) and occasionally wall scrolls, accessories, key chains, smartphone covers, mugs etc.
 
@@ -96,6 +97,7 @@ moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
 ### Good Smile Company
 <details>
 <summary>Click to expand...</summary>
+<br/>
 
 [Good Smile Company](https://www.goodsmile.info) is a Japanese company specializing in anime figures and nendoroids. It also sell goods as well. It has a [English website](https://www.goodsmile.info/en/).
 
