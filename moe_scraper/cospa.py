@@ -41,7 +41,7 @@ class CospaItem:
         yield 'sizes', self.sizes
 
 
-def cospa_download_image(item_ids, save_jan_code=False):
+def cospa_download_images(item_ids, save_jan_code=False):
     """
     Download image by list of Item ID
     :param item_ids: Array of string, Item ID of the products
@@ -50,7 +50,7 @@ def cospa_download_image(item_ids, save_jan_code=False):
     """
     config = read_config_file()
     if COSPA_OUTPUT_IMAGE_FOLDER not in config:
-        print('COSPA_OUTPUT_IMAGE_FOLDER not found in app.config')
+        print('%s not found in app.config' % COSPA_OUTPUT_IMAGE_FOLDER)
         return
     if IMAGE_DOWNLOAD_LOG_PATH in config:
         log_path = config[IMAGE_DOWNLOAD_LOG_PATH]
@@ -74,14 +74,14 @@ def cospa_download_image(item_ids, save_jan_code=False):
                     if len(image_urls) == 1:
                         image_name = code
                     else:
-                        image_name = '%s_%s' % (code, str(i + 1))
+                        image_name = '%s_%s' % (code, str(i + 1).zfill(len(str(len(image_urls)))))
                     download_image(image_urls[i], image_name, image_output, log_path)
     except Exception as e:
         print(e)
         return
 
 
-def cospa_download_image_expr(expr, save_jan_code=False):
+def cospa_download_images_expr(expr, save_jan_code=False):
     """
     Download image by list of Item ID by expression (e.g. 100-110,113,115)
     :param expr: Expression e.g. range indicate by two numbers separated by '-', and separator by ','
@@ -89,7 +89,7 @@ def cospa_download_image_expr(expr, save_jan_code=False):
     :return:
     """
     item_ids = get_numbers_from_expression(expr)
-    cospa_download_image(item_ids, save_jan_code)
+    cospa_download_images(item_ids, save_jan_code)
 
 
 def cospa_get_jan_code(soup):
@@ -114,7 +114,7 @@ def cospa_get_items(item_ids):
     items = []
     for item_id in item_ids:
         item = cospa_get_item(item_id)
-        if item:
+        if bool(item):
             items.append(item)
     return items
 

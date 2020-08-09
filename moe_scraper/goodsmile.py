@@ -1,7 +1,9 @@
 from moe_scraper.util import *
 
-GOODSMILE_ITEM_PAGE_TEMPLATE_JP = 'https://www.goodsmile.info/ja/product/%s'
-GOODSMILE_ITEM_PAGE_TEMPLATE_EN = 'https://www.goodsmile.info/en/product/%s'
+GOODSMILE_ITEM_PAGE_JP = 'https://www.goodsmile.info/ja/product/'
+GOODSMILE_ITEM_PAGE_EN = 'https://www.goodsmile.info/en/product/'
+GOODSMILE_ITEM_PAGE_TEMPLATE_JP = GOODSMILE_ITEM_PAGE_JP + '%s'
+GOODSMILE_ITEM_PAGE_TEMPLATE_EN = GOODSMILE_ITEM_PAGE_EN + '%s'
 
 
 class GoodsmileItem:
@@ -39,6 +41,7 @@ class GoodsmileItem:
         yield 'sizes', self.sizes
         yield 'annoucement_date', self.announcement_date
         yield 'website', self.website
+        yield 'other_info', self.other_info
         yield 'related_items', self.related_items
 
 
@@ -58,11 +61,26 @@ def goodsmile_get_item(item_id, is_english=False):
         item.image_urls = goodsmile_get_image_urls(soup)
         item = goodsmile_populate_item_details(soup, item, is_english)
         item.website = item_url
-
+        item.related_items = goodsmile_get_related_items(soup, is_english)
+        item.other_info = goodsmile_get_other_info(soup, is_english)
     except Exception as e:
         print(e)
         return {}
     return dict(item)
+
+
+def goodsmile_get_items(item_ids, is_english=False):
+    items = []
+    for item_id in item_ids:
+        item = goodsmile_get_item(item_id, is_english)
+        if bool(item):
+            items.append(item)
+    return items
+
+
+def goodsmile_get_items_expr(expr, is_english=False):
+    item_ids = get_numbers_from_expression(expr)
+    return goodsmile_get_items(item_ids, is_english)
 
 
 def goodsmile_get_name(soup):
@@ -71,6 +89,43 @@ def goodsmile_get_name(soup):
         return title.text.strip()
     else:
         return ''
+
+
+def goodsmile_download_images(item_ids):
+    config = read_config_file()
+    if GOODSMILE_OUTPUT_IMAGE_FOLDER not in config:
+        print('%s not found in app.config' % GOODSMILE_OUTPUT_IMAGE_FOLDER)
+        return
+    if IMAGE_DOWNLOAD_LOG_PATH in config:
+        log_path = config[IMAGE_DOWNLOAD_LOG_PATH]
+    else:
+        log_path = ''
+    image_output = config[GOODSMILE_OUTPUT_IMAGE_FOLDER]
+    try:
+        for item_id in item_ids:
+            item_url = GOODSMILE_ITEM_PAGE_TEMPLATE_JP % str(item_id)
+            soup = get_soup(item_url)
+            if soup:
+                image_urls = goodsmile_get_image_urls(soup)
+                for i in range(len(image_urls)):
+                    if len(image_urls) == 1:
+                        image_name = str(item_id)
+                    else:
+                        image_name = '%s_%s' % (str(item_id), str(i + 1).zfill(len(str(len(image_urls)))))
+                    download_image(image_urls[i], image_name, image_output, log_path)
+    except Exception as e:
+        print(e)
+        return
+
+
+def goodsmile_download_images_expr(expr):
+    """
+    Download image by list of Item ID by expression (e.g. 100-110,113,115)
+    :param expr: Expression e.g. range indicate by two numbers separated by '-', and separator by ','
+    :return:
+    """
+    item_ids = get_numbers_from_expression(expr)
+    goodsmile_download_images(item_ids)
 
 
 def goodsmile_get_description(soup):
@@ -88,6 +143,16 @@ def goodsmile_get_description(soup):
         p_text = p_tag.text.strip()
         if len(p_text) > 0:
             result.append(p_text)
+        for t in p_tag.next_siblings:
+            if t.name is None:
+                continue
+            elif t.name == 'ul' or t.name == 'ol':
+                lis = t.find_all('li')
+                for li in lis:
+                    if len(li.text.strip()) > 0:
+                        result.append(li.text.strip())
+            else:
+                break
     return result
 
 
@@ -106,7 +171,7 @@ def goodsmile_get_image_urls(soup):
     return image_urls
 
 
-def goodsmile_populate_item_details(soup, item, is_english=False):
+def goodsmile_populate_item_details(soup, item, is_english):
     item_detail = soup.find('div', class_='detailBox') # first detail box
     if item_detail:
         if is_english:
@@ -204,3 +269,49 @@ def goodsmile_populate_item_details(soup, item, is_english=False):
                 if len(announcement_date) > 0:
                     item.announcement_date = announcement_date
     return item
+
+
+def goodsmile_get_related_items(soup, is_english):
+    items = []
+    related_div = soup.find('div', class_='relatedBox')
+    if related_div:
+        li_tags = related_div.find_all('li')
+        for li_tag in li_tags:
+            item = {'id': '', 'name': ''}
+            a_tag = li_tag.find('a')
+            if a_tag and a_tag.has_attr('href'):
+                if is_english and GOODSMILE_ITEM_PAGE_EN in a_tag['href']:
+                    try:
+                        item_id = str(int(a_tag['href'].replace(GOODSMILE_ITEM_PAGE_EN, '').split('/')[0]))
+                        item['id'] = item_id
+                    except:
+                        pass
+                elif GOODSMILE_ITEM_PAGE_JP in a_tag['href']:
+                    try:
+                        item_id = str(int(a_tag['href'].replace(GOODSMILE_ITEM_PAGE_JP, '').split('/')[0]))
+                        item['id'] = item_id
+                    except:
+                        pass
+            img_tag = li_tag.find('img')
+            if img_tag and img_tag.has_attr('alt') and len(img_tag['alt']) > 0:
+                item['name'] = img_tag['alt']
+            if len(item['id']) > 0 or len(item['name']) > 0:
+                items.append(item)
+    return items
+
+
+def goodsmile_get_other_info(soup, is_english):
+    item_detail = soup.find('div', class_='detailBox')  # first detail box
+    other_info = {}
+    if item_detail:
+        dts = item_detail.find_all('dt')
+        if is_english:
+            dt_names = ['Product Name', 'Series', 'Manufacturer', 'Category', 'Price',
+                        'Release Date', 'Specifications', 'Sculptor', 'Size']
+        else:
+            dt_names = ['商品名', '作品名', 'メーカー', 'カテゴリー', '価格', '発売時期', '仕様', '原型制作', 'サイズ']
+        for dt in dts:
+            if dt.text.strip() not in dt_names:
+                dd = dt.find_next_sibling('dd')
+                other_info[dt.text.strip()] = " ".join(dd.text.split())
+    return other_info
