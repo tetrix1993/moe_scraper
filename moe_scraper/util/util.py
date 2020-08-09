@@ -35,6 +35,8 @@ def get_response(url, headers=None, decode=True, charset=None):
         headers['Content-Type'] = 'text/html; charset=' + charset
     try:
         result = requests.get(url, headers=headers)
+        if result.status_code != 200:
+            return None
         if charset and decode:
             response = str(result.content.decode(charset))
         elif decode:
@@ -64,6 +66,8 @@ def post_response(url, headers=None, data=None, decode=False, charset=None):
         headers = {'User-Agent': USER_AGENT}
     try:
         result = requests.post(url, headers=headers, data=data)
+        if result.status_code != 200:
+            return None
         if charset and decode:
             response = str(result.content.decode(charset))
         elif decode:

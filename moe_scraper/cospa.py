@@ -1,6 +1,6 @@
 from moe_scraper.util import *
 
-ITEM_PAGE_TEMPLATE = 'http://cospa.co.jp/detail/id/%s'
+COSPA_ITEM_PAGE_TEMPLATE = 'http://cospa.co.jp/detail/id/%s'
 
 
 class CospaItem:
@@ -59,7 +59,7 @@ def cospa_download_image(item_ids, save_jan_code=False):
     image_output = config[COSPA_OUTPUT_IMAGE_FOLDER]
     try:
         for item_id in item_ids:
-            item_url = ITEM_PAGE_TEMPLATE % str(item_id).zfill(11)
+            item_url = COSPA_ITEM_PAGE_TEMPLATE % str(item_id).zfill(11)
             soup = get_soup(item_url)
             if soup:
                 image_urls = cospa_get_image_urls(soup)
@@ -126,7 +126,7 @@ def cospa_get_items_expr(expr):
 
 def cospa_get_item(item_id):
     item = CospaItem(item_id)
-    item_url = ITEM_PAGE_TEMPLATE % str(item_id)
+    item_url = COSPA_ITEM_PAGE_TEMPLATE % str(item_id)
     try:
         soup = get_soup(item_url)
         if soup is None:
