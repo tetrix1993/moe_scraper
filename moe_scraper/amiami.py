@@ -54,13 +54,15 @@ def amiami_download_images(item_ids, category, save_jan_code=False):
             item_code = category + '-' + str(item_id).zfill(category_length)
             item_url = AMIAMI_ITEM_PAGE_TEMPLATE % str(item_code)
             soup = get_soup(item_url)
-            if save_jan_code:
-                code = amiami_get_jan(soup)
-                if code is None:
-                    code = item_code
-            else:
-                code = item_code
+
             if soup:
+                if save_jan_code:
+                    code = amiami_get_jan(soup)
+                    if code is None:
+                        code = item_code
+                else:
+                    code = item_code
+
                 image_urls = amiami_get_image_urls(soup)
                 for i in range(len(image_urls)):
                     if len(image_urls) == 1:

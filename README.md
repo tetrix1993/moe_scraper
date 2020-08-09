@@ -139,7 +139,7 @@ moe_scraper.cospa_get_items_expr('100719,101021,100407-100409')
 
 #### function cospa_download_images
 The `cospa_download_images` function accepts two arguments:
-* `item_ids` - Array of ItemIDs (can be array of string or integer)
+* `item_ids` - Array of Item IDs (can be array of string or integer)
 * `save_jan_code` - (Optional) False by default, the name of the image being saved will be the ItemID. If set to be True, the JAN code of the item will used as the name of the image saved.
 
 The output will be saved in the directory that is specified at `COSPA_OUTPUT_IMAGE_FOLDER` in `app.config`.
@@ -162,6 +162,41 @@ import moe_scraper
 # Download images of products of item ID 100719, 101021, 100407, 100408 and 100409
 moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
 ```
+</details>
+
+### Dezaegg (License Agent)
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Dezaegg](http://dezaegg.com/) is a website selling anime merchandises manufactured by License Agent. The Item ID can be retrieved from the item URL. E.g. `77135` in the URL `http://dezaegg.com/products/detail.php?product_id=77135`
+
+#### function dezaegg_download_images
+The `dezaegg_download_images` function accepts two arguments:
+* `item_ids` - Array of Item IDs (can be array of string or integer)
+* `save_jan_code` - (Optional) False by default, the name of the image being saved will be the Item ID. If set to be True, the JAN code of the item will used as the name of the image saved.
+
+The output will be saved in the directory that is specified at `DEZAEGG_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 77129, 77130, 77131 and 77135
+moe_scraper.dezaegg_download_images([77129, 77130, 77131, 77135], True)
+```
+
+#### function dezaegg_download_images_expr
+The `dezaegg_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 77129, 77130, 77131 and 77135
+moe_scraper.dezaegg_download_images_expr('77129-77131,77135', True)
+```
+
 </details>
 
 ### Good Smile Company
