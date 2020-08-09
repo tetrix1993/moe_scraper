@@ -16,6 +16,7 @@ All configuration settings can be found in the `app.config`. You can change the 
 ### AmiAmi
 <details>
 <summary>Click to expand...</summary>
+<br/>
 
 [AmiAmi](https://www.amiami.jp/) is a Japanese online retailer selling anime figures, merchandises, printed materials and media. Each item has an item code which consists of a category name and a code. For example, the product page `https://www.amiami.jp/top/detail/detail?gcode=FIGURE-611316` item code is `FIGURE-611316` where the category is `FIGURE` and code is `611316`.
 
@@ -57,6 +58,8 @@ ms.amiami_download_images([389993, 389994, 389995, 390411], ms.AMIAMI_CATEGORY_G
 
 ### function amiami_download_images_expr
 The `amiami_download_images_expr` has the same logic as `amiami_download_images`, but accepts `expr` instead:
+
+The output will be saved in the directory that is specified at `AMIAMI_OUTPUT_IMAGE_FOLDER` in `app.config`.
 
 Example:
 ```python
