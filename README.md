@@ -22,7 +22,7 @@ All configuration settings can be found in the `app.config`. You can change the 
 
 AmiAmi has an English site, which also uses the same item code.
 
-### function amiami_download_images
+#### function amiami_download_images
 The `amiami_download_images` function downloads the images of the products with the given category and code. It accepts three arguments:
 * `item_ids` - List of product code (either string or integer)
 * `category` - Category name the product belongs to
@@ -58,7 +58,7 @@ import moe_scraper as ms
 ms.amiami_download_images([389993, 389994, 389995, 390411], ms.AMIAMI_CATEGORY_GOODS)
 ```
 
-### function amiami_download_images_expr
+#### function amiami_download_images_expr
 The `amiami_download_images_expr` has the same logic as `amiami_download_images`, but accepts `expr` instead:
 
 Example:
