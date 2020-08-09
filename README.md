@@ -47,6 +47,8 @@ Constant variables are provided for the various types of category used in AmiAmi
 | TOY-SCL2 |AMIAMI_CATEGORY_TOY_SCL2 |
 | TOY-SCL3 |AMIAMI_CATEGORY_TOY_SCL3 |
 
+The output will be saved in the directory that is specified at `AMIAMI_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
 Example:
 ```python
 import moe_scraper as ms
@@ -58,8 +60,6 @@ ms.amiami_download_images([389993, 389994, 389995, 390411], ms.AMIAMI_CATEGORY_G
 
 ### function amiami_download_images_expr
 The `amiami_download_images_expr` has the same logic as `amiami_download_images`, but accepts `expr` instead:
-
-The output will be saved in the directory that is specified at `AMIAMI_OUTPUT_IMAGE_FOLDER` in `app.config`.
 
 Example:
 ```python
