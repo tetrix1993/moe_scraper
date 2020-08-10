@@ -9,6 +9,7 @@ def aieris_download_images(item_ids, save_jan_code=False):
     config = read_config_file()
     if AIERIS_OUTPUT_IMAGE_FOLDER not in config:
         print('%s not found in app.config' % AIERIS_OUTPUT_IMAGE_FOLDER)
+        return
     if IMAGE_DOWNLOAD_LOG_PATH in config:
         log_path = config[IMAGE_DOWNLOAD_LOG_PATH]
     else:

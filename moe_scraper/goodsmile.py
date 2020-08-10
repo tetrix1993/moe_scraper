@@ -97,6 +97,7 @@ def goodsmile_download_images(item_ids):
     config = read_config_file()
     if GOODSMILE_OUTPUT_IMAGE_FOLDER not in config:
         print('%s not found in app.config' % GOODSMILE_OUTPUT_IMAGE_FOLDER)
+        return
     if IMAGE_DOWNLOAD_LOG_PATH in config:
         log_path = config[IMAGE_DOWNLOAD_LOG_PATH]
     else:

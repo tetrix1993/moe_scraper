@@ -349,6 +349,9 @@ moe_scraper.curtain_damashii_download_images_by_event_id('c98', pages=1)
 ```
 </details>
 
+### Dengekiya
+To be updated.
+
 ### Dezaegg (License Agent)
 <details>
 <summary>Click to expand...</summary>

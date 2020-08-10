@@ -38,9 +38,9 @@ def get_response(url, headers=None, decode=True, charset=None):
         if result.status_code != 200:
             return None
         if charset and decode:
-            response = str(result.content.decode(charset))
+            response = str(result.content.decode(charset, errors='ignore'))
         elif decode:
-            response = str(result.content.decode())
+            response = str(result.content.decode(errors='ignore'))
         else:
             response = str(result.content)
     except Exception as e:
@@ -184,13 +184,13 @@ def get_numbers_from_expression(expr):
     return results
 
 
-def download_images(image_urls, code, image_output, log_path):
+def download_images(image_urls, code, image_output, log_path, headers=None):
     for i in range(len(image_urls)):
         if len(image_urls) == 1:
             image_name = code
         else:
             image_name = '%s_%s' % (code, str(i + 1).zfill(len(str(len(image_urls)))))
-        download_image(image_urls[i], image_name, image_output, log_path)
+        download_image(image_urls[i], image_name, image_output, log_path, headers=headers)
 
 
 def convert_item_ids_to_list(item_ids):

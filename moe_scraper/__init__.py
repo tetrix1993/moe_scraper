@@ -11,6 +11,9 @@ from .cospa import cospa_download_images, cospa_download_images_expr
 from .cospa import cospa_get_item, cospa_get_items, cospa_get_items_expr
 from .curtain_damashii import curtain_damashii_download_images, curtain_damashii_download_images_by_category_id
 from .curtain_damashii import curtain_damashii_download_images_by_tag_id, curtain_damashii_download_images_by_event_id
+from .dengekiya import dengekiya_download_images, dengekiya_download_images_by_series
+from .dengekiya import dengekiya_download_images_by_magazine, dengekiya_download_images_by_item_type
+from .dengekiya import dengekiya_download_images_preorder, dengekiya_download_images_new_item
 from .dezaegg import dezaegg_download_images, dezaegg_download_images_expr
 from .gamers import gamers_download_images, gamers_download_images_expr
 from .goodsmile import goodsmile_download_images, goodsmile_download_images_expr
