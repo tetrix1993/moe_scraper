@@ -73,7 +73,11 @@ def penguin_parade_download_images_by_brand(brand, pages=99):
             if a_tag and a_tag.has_attr('href'):
                 split1 = a_tag['href'].split('/')
                 if len(split1) > 2:
-                    penguin_parade_download_images([split1[2]])
+                    try:
+                        item_id = int(split1[2])
+                        penguin_parade_download_images([item_id])
+                    except:
+                        continue
         if not penguin_parade_has_next_page(soup):
             break
 
