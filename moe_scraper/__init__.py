@@ -19,3 +19,5 @@ from .gamers import gamers_download_images, gamers_download_images_expr
 from .goodsmile import goodsmile_download_images, goodsmile_download_images_expr
 from .goodsmile import goodsmile_get_item, goodsmile_get_items, goodsmile_get_items_expr
 from .goodsmile import goodsmile_download_images_front_page
+from .penguin_parade import penguin_parade_download_images, penguin_parade_download_images_expr
+from .penguin_parade import penguin_parade_download_images_by_brand

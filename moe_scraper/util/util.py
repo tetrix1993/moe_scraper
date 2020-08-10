@@ -96,7 +96,6 @@ def download_image(url, name, output, log_path='', headers=None):
         headers = {'User-Agent': USER_AGENT}
     try:
         with requests.get(url, stream=True, headers=headers) as r:
-            r.raise_for_status()
             if r.status_code != 200:
                 return -1
             content_type = r.headers['Content-Type']

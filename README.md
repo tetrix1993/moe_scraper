@@ -554,3 +554,21 @@ moe_scraper.goodsmile_download_images_front_page(is_figure=True, is_english=True
 moe_scraper.goodsmile_download_images_front_page(is_figure=False, is_english=False)
 ```
 </details>
+
+### Penguin Parade
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Penguin Parade](http://www.penguinparade.jp/) - To be updated...
+
+#### function penguin_parade_download_images
+To be updated...
+
+#### function penguin_parade_download_images_expr
+To be updated...
+
+#### function penguin_parade_download_images_by_brand
+To be updated...
+
+</details>
