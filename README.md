@@ -14,7 +14,43 @@ All configuration settings can be found in the `app.config`. You can change the 
 
 ## Usage
 ### Aieris (MS Factory)
-[Aieris](https://www.aieris.jp/) - To be updated
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Aieris](https://www.aieris.jp/) is a Japanese website selling anime merchandises manufactured by MS Factory (also known as M's or Matsumoto Shouji). The Item ID can be retrieved from the item URL. E.g. `31252942` in the URL `https://www.aieris.jp/items/31252942`
+
+#### function aieris_download_images
+The `aieris_download_images` function accepts two arguments:
+* `item_ids` - Array of Item IDs (can be array of string or integer)
+* `save_jan_code` - (Optional) False by default, the name of the image being saved will be the Item ID. If set to be True, the JAN code of the item will used as the name of the image saved.
+
+The output will be saved in the directory that is specified at `AIERIS_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 31252942, 31252933, 31252929
+moe_scraper.aieris_download_images([31252942, 31252933, 31252929], save_jan_code=True)
+```
+
+#### function aieris_download_images_by_category_id
+On the website, items can be grouped by categories. The category ID can be found in the URL. E.g. `2606190` in `https://www.aieris.jp/categories/2606190`.
+
+The `aieris_download_images_by_category_id` function downloads the images of all the items in the category. It accepts three arguments:
+* `category_id` - Category ID in string or integer
+* `save_jan_code` - (Optional) False by default, the name of the image being saved will be the Item ID. If set to be True, the JAN code of the item will used as the name of the image saved.
+* `pages` - (Optional) Maximum number of pages to scrape. It is set as 99 by default. The scraper will stop if the number of pages found is less than `pages`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of items belonging to category ID 2606190, search up to 1 page
+moe_scraper.aieris_download_images_by_category_id(2606190, save_jan_code=True, pages=1)
+```
+</details>
 
 ### AmiAmi
 <details>
@@ -58,7 +94,7 @@ import moe_scraper as ms
 
 # Download images of products of with item codes:
 # GOODS-00389993, GOODS-00389994, GOODS-00389995, GOODS-00390411
-ms.amiami_download_images([389993, 389994, 389995, 390411], ms.AMIAMI_CATEGORY_GOODS)
+ms.amiami_download_images([389993, 389994, 389995, 390411], category=ms.AMIAMI_CATEGORY_GOODS, save_jan_code=True)
 ```
 
 #### function amiami_download_images_expr
@@ -70,13 +106,44 @@ import moe_scraper as ms
 
 # Download images of products of with item codes:
 # GOODS-00389993, GOODS-00389994, GOODS-00389995, GOODS-00390411
-ms.amiami_download_images_expr('389993-389995,390411', ms.AMIAMI_CATEGORY_GOODS)
+ms.amiami_download_images_expr('389993-389995,390411', category=ms.AMIAMI_CATEGORY_GOODS, save_jan_code=True)
 ```
 
 </details>
 
 ### Animate
-[Animate](https://www.animate-onlineshop.jp/) - To be updated
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Animate](https://www.animate-onlineshop.jp/) is a Japanese online retailer selling anime figures, merchandises, printed materials and media. Each item has an item ID. For example, the product page `https://www.animate-onlineshop.jp/pn/pd/1811031/` has an item ID of `1811031`.
+
+#### function animate_download_images
+The `animate_download_images` function accepts two arguments:
+* `item_ids` - Array of Item IDs (can be array of string or integer)
+* `save_jan_code` - (Optional) False by default, the name of the image being saved will be the Item ID. If set to be True, the JAN code of the item will used as the name of the image saved.
+
+The output will be saved in the directory that is specified at `ANIMATE_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 1811000, 1811001, 1811002, 1811031
+moe_scraper.animate_download_images([1811000, 1811001, 1811002, 1811031], save_jan_code=True)
+```
+
+#### function animate_download_images_expr
+The `animate_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 1811000, 1811001, 1811002, 1811031
+moe_scraper.animate_download_images_expr('1811000-1811002,1811031', save_jan_code=True)
+```
+</details>
 
 ### CDJapan (Neowing)
 <details>
@@ -99,7 +166,7 @@ Example:
 import moe_scraper
 
 # Download images of products of item ID 411686, 413647, 413648, 413649
-moe_scraper.cdjapan_download_images([411686, 413647, 413648, 413649], True)
+moe_scraper.cdjapan_download_images([411686, 413647, 413648, 413649], save_jan_code=True)
 ```
 
 #### function cdjapan_download_images_expr
@@ -110,7 +177,7 @@ Example:
 import moe_scraper
 
 # Download images of products of item ID 411686, 413647, 413648, 413649
-moe_scraper.cdjapan_download_images_expr('411686-413648,413649', True)
+moe_scraper.cdjapan_download_images_expr('411686-413648,413649', save_jan_code=True)
 ```
 
 </details>
@@ -192,7 +259,7 @@ Example:
 import moe_scraper
 
 # Download images of products of item ID 100719, 101021, 100407, 100408 and 100409
-moe_scraper.cospa_download_images([100719, 101021, 100407, 100408, 100409], True)
+moe_scraper.cospa_download_images([100719, 101021, 100407, 100408, 100409], save_jan_code=True)
 ```
 
 #### function cospa_download_images_expr
@@ -203,7 +270,7 @@ Example:
 import moe_scraper
 
 # Download images of products of item ID 100719, 101021, 100407, 100408 and 100409
-moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
+moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', save_jan_code=True)
 ```
 </details>
 
@@ -226,7 +293,7 @@ Example:
 import moe_scraper
 
 # Download images of products of item ID 77129, 77130, 77131 and 77135
-moe_scraper.dezaegg_download_images([77129, 77130, 77131, 77135], True)
+moe_scraper.dezaegg_download_images([77129, 77130, 77131, 77135], save_jan_code=True)
 ```
 
 #### function dezaegg_download_images_expr
@@ -237,13 +304,44 @@ Example:
 import moe_scraper
 
 # Download images of products of item ID 77129, 77130, 77131 and 77135
-moe_scraper.dezaegg_download_images_expr('77129-77131,77135', True)
+moe_scraper.dezaegg_download_images_expr('77129-77131,77135', save_jan_code=True)
 ```
 
 </details>
 
 ### Gamers
-[Gamers](https://www.gamers.co.jp/) - To be updated
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Gamers](https://www.gamers.co.jp/) is a Japanese online retailer selling anime figures, merchandises, printed materials and media. Each item has an item ID. For example, the product page `https://www.animate-onlineshop.jp/pn/pd/10503350/` has an item ID of `10503350`.
+
+#### function gamers_download_images
+The `gamers_download_images` function accepts two arguments:
+* `item_ids` - Array of Item IDs (can be array of string or integer)
+* `save_jan_code` - (Optional) False by default, the name of the image being saved will be the Item ID. If set to be True, the JAN code of the item will used as the name of the image saved.
+
+The output will be saved in the directory that is specified at `GAMERS_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 10503000, 10503001, 10503002, 10503350
+moe_scraper.gamers_download_images([10503000, 10503001, 10503002, 10503350], save_jan_code=True)
+```
+
+#### function gamers_download_images_expr
+The `gamers_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 10503000, 10503001, 10503002, 10503350
+moe_scraper.gamers_download_images_expr('10503000-10503002,10503350', save_jan_code=True)
+```
+</details>
 
 ### Good Smile Company
 <details>
