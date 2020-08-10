@@ -13,7 +13,7 @@ pip install bs4
 All configuration settings can be found in the `app.config`. You can change the output directory here.
 
 ## Usage
-### Aieris (MS Factory)
+### Aieris (MS Factory/M's/Matsumoto Shouji)
 <details>
 <summary>Click to expand...</summary>
 <br/>
@@ -47,7 +47,7 @@ Example:
 ```python
 import moe_scraper
 
-# Download images of products of items belonging to category ID 2606190, search up to 1 page
+# Download images of products belonging to category ID 2606190, search up to 1 page
 moe_scraper.aieris_download_images_by_category_id(2606190, save_jan_code=True, pages=1)
 ```
 </details>
