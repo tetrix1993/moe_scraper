@@ -334,7 +334,7 @@ moe_scraper.curtain_damashii_download_images_by_tag_id('kanokari', pages=1)
 #### function curtain_damashii_download_images_by_event_id
 The `curtain_damashii_download_images_by_event_id` function downloads items that belongs to the event ID. The event ID can be obtained from the URL.
 
-Example: Tag ID `kanokari` in `https://www.curtain-damashii.com/item/tag/kanokari/`
+Example: Event ID `c98` in `https://www.curtain-damashii.com/event/c98/`
 
 The function accepts two arguments:
 * `event_id` - Event ID of the event in string
