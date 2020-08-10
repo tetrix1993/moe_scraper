@@ -72,6 +72,9 @@ ms.amiami_download_images_expr('389993-389995,390411', ms.AMIAMI_CATEGORY_GOODS)
 
 </details>
 
+### Animate
+[Animate](https://www.animate-onlineshop.jp/) - To be updated
+
 ### CDJapan (Neowing)
 <details>
 <summary>Click to expand...</summary>
@@ -235,6 +238,9 @@ moe_scraper.dezaegg_download_images_expr('77129-77131,77135', True)
 ```
 
 </details>
+
+### Gamers
+[Gamers](https://www.gamers.co.jp/) - To be updated
 
 ### Good Smile Company
 <details>
