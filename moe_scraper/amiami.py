@@ -44,6 +44,11 @@ def amiami_download_images(item_ids, category, save_jan_code=False):
         log_path = ''
     image_output = config[AMIAMI_OUTPUT_IMAGE_FOLDER]
 
+    item_ids = convert_item_ids_to_list(item_ids)
+    if item_ids is None:
+        print('Invalid Item IDs')
+        return
+
     category_length = get_category_length(category)
     if category_length == 0:
         print('Invalid category')
@@ -64,12 +69,7 @@ def amiami_download_images(item_ids, category, save_jan_code=False):
                     code = item_code
 
                 image_urls = amiami_get_image_urls(soup)
-                for i in range(len(image_urls)):
-                    if len(image_urls) == 1:
-                        image_name = code
-                    else:
-                        image_name = '%s_%s' % (code, str(i + 1).zfill(len(str(len(image_urls)))))
-                    download_image(image_urls[i], image_name, image_output, log_path)
+                download_images(image_urls, code, image_output, log_path)
     except Exception as e:
         print(e)
 

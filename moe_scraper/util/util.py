@@ -183,3 +183,25 @@ def get_numbers_from_expression(expr):
             return []
     return results
 
+
+def download_images(image_urls, code, image_output, log_path):
+    for i in range(len(image_urls)):
+        if len(image_urls) == 1:
+            image_name = code
+        else:
+            image_name = '%s_%s' % (code, str(i + 1).zfill(len(str(len(image_urls)))))
+        download_image(image_urls[i], image_name, image_output, log_path)
+
+
+def convert_item_ids_to_list(item_ids):
+    if type(item_ids) is list:
+        return item_ids
+    elif type(item_ids) is int:
+        return [item_ids]
+    elif type(item_ids) is str:
+        try:
+            return [int(item_ids)]
+        except:
+            return None
+    else:
+        return None

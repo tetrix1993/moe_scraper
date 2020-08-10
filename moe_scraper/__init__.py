@@ -4,6 +4,7 @@ from .amiami import AMIAMI_CATEGORY_CARD, AMIAMI_CATEGORY_GAME, AMIAMI_CATEGORY_
 from .amiami import AMIAMI_CATEGORY_LTD_DVD, AMIAMI_CATEGORY_LTD_ETC, AMIAMI_CATEGORY_LTD_FIG, AMIAMI_CATEGORY_LTD_PCG
 from .amiami import AMIAMI_CATEGORY_MED_BOOK, AMIAMI_CATEGORY_MED_CD2, AMIAMI_CATEGORY_MED_DVD2
 from .amiami import AMIAMI_CATEGORY_RAIL, AMIAMI_CATEGORY_TOY_SCL2, AMIAMI_CATEGORY_TOY_SCL3
+from .cdjapan import cdjapan_download_images, cdjapan_download_images_expr
 from .cospa import cospa_download_images, cospa_download_images_expr
 from .cospa import cospa_get_item, cospa_get_items, cospa_get_items_expr
 from .dezaegg import dezaegg_download_images, dezaegg_download_images_expr

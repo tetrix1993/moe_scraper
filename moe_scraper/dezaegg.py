@@ -16,6 +16,11 @@ def dezaegg_download_images(item_ids, save_jan_code=False):
         log_path = ''
     image_output = config[DEZAEGG_OUTPUT_IMAGE_FOLDER]
 
+    item_ids = convert_item_ids_to_list(item_ids)
+    if item_ids is None:
+        print('Invalid Item IDs')
+        return
+
     try:
         for item_id in item_ids:
             item_url = DEZAEGG_ITEM_PAGE_TEMPLATE % str(item_id)
@@ -29,12 +34,7 @@ def dezaegg_download_images(item_ids, save_jan_code=False):
                 else:
                     code = str(item_id)
                 image_urls = dezaegg_get_image_urls(soup)
-                for i in range(len(image_urls)):
-                    if len(image_urls) == 1:
-                        image_name = code
-                    else:
-                        image_name = '%s_%s' % (code, str(i + 1).zfill(len(str(len(image_urls)))))
-                    download_image(image_urls[i], image_name, image_output, log_path)
+                download_images(image_urls, code, image_output, log_path)
     except Exception as e:
         print(e)
 

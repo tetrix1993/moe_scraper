@@ -102,6 +102,12 @@ def goodsmile_download_images(item_ids):
     else:
         log_path = ''
     image_output = config[GOODSMILE_OUTPUT_IMAGE_FOLDER]
+
+    item_ids = convert_item_ids_to_list(item_ids)
+    if item_ids is None:
+        print('Invalid Item IDs')
+        return
+
     try:
         for item_id in item_ids:
             if is_image_exists(image_output + '/' + str(item_id)) or \
@@ -112,12 +118,7 @@ def goodsmile_download_images(item_ids):
             soup = get_soup(item_url)
             if soup:
                 image_urls = goodsmile_get_image_urls(soup)
-                for i in range(len(image_urls)):
-                    if len(image_urls) == 1:
-                        image_name = str(item_id)
-                    else:
-                        image_name = '%s_%s' % (str(item_id), str(i + 1).zfill(len(str(len(image_urls)))))
-                    download_image(image_urls[i], image_name, image_output, log_path)
+                download_images(image_urls, str(item_id), image_output, log_path)
     except Exception as e:
         print(e)
 

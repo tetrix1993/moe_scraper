@@ -72,6 +72,43 @@ ms.amiami_download_images_expr('389993-389995,390411', ms.AMIAMI_CATEGORY_GOODS)
 
 </details>
 
+### CDJapan (Neowing)
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[CDJapan](https://www.cdjapan.co.jp/) is a Japanese online retailer selling anime figures, merchandises, printed materials and media. Each item has an item ID. For example, the product page `https://www.neowing.co.jp/product/NEOGDS-411686` has an item ID of `411686`.
+
+The Japanese version of the website is known as [Neowing](https://www.neowing.co.jp/). The image downloads will be from the Japanese version as it will have more items than the English version.
+
+#### function cdjapan_download_images
+The `cdjapan_download_images` function accepts two arguments:
+* `item_ids` - Array of Item IDs (can be array of string or integer)
+* `save_jan_code` - (Optional) False by default, the name of the image being saved will be the Item ID. If set to be True, the JAN code of the item will used as the name of the image saved.
+
+The output will be saved in the directory that is specified at `CDJAPAN_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 411686, 413647, 413648, 413649
+moe_scraper.cdjapan_download_images([411686, 413647, 413648, 413649], True)
+```
+
+#### function cdjapan_download_images_expr
+The `cdjapan_download_images_expr` function has the same logic, but expression `expr` is used instead of array of Item IDs:
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID 411686, 413647, 413648, 413649
+moe_scraper.cdjapan_download_images_expr('411686-413648,413649', True)
+```
+
+</details>
+
 ### Cospa
 <details>
 <summary>Click to expand...</summary>
@@ -169,7 +206,7 @@ moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', True)
 <summary>Click to expand...</summary>
 <br/>
 
-[Dezaegg](http://dezaegg.com/) is a website selling anime merchandises manufactured by License Agent. The Item ID can be retrieved from the item URL. E.g. `77135` in the URL `http://dezaegg.com/products/detail.php?product_id=77135`
+[Dezaegg](http://dezaegg.com/) is a Japanese website selling anime merchandises manufactured by License Agent. The Item ID can be retrieved from the item URL. E.g. `77135` in the URL `http://dezaegg.com/products/detail.php?product_id=77135`
 
 #### function dezaegg_download_images
 The `dezaegg_download_images` function accepts two arguments:

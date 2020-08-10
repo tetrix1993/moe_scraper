@@ -57,25 +57,26 @@ def cospa_download_images(item_ids, save_jan_code=False):
     else:
         log_path = ''
     image_output = config[COSPA_OUTPUT_IMAGE_FOLDER]
+
+    item_ids = convert_item_ids_to_list(item_ids)
+    if item_ids is None:
+        print('Invalid Item IDs')
+        return
+
     try:
         for item_id in item_ids:
             item_url = COSPA_ITEM_PAGE_TEMPLATE % str(item_id).zfill(11)
             soup = get_soup(item_url)
             if soup:
                 image_urls = cospa_get_image_urls(soup)
-                for i in range(len(image_urls)):
-                    if save_jan_code:
-                        code = cospa_get_jan_code(soup)
-                        if len(code) == 0:
-                            print('Unable to retrieve JAN for Item ID %s' % str(item_id))
-                            code = str(item_id).zfill(11)
-                    else:
+                if save_jan_code:
+                    code = cospa_get_jan_code(soup)
+                    if len(code) == 0:
+                        #print('Unable to retrieve JAN for Item ID %s' % str(item_id))
                         code = str(item_id).zfill(11)
-                    if len(image_urls) == 1:
-                        image_name = code
-                    else:
-                        image_name = '%s_%s' % (code, str(i + 1).zfill(len(str(len(image_urls)))))
-                    download_image(image_urls[i], image_name, image_output, log_path)
+                else:
+                    code = str(item_id).zfill(11)
+                download_images(image_urls, code, image_output, log_path)
     except Exception as e:
         print(e)
         return
