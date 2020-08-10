@@ -9,6 +9,8 @@ from .animate import animate_download_images, animate_download_images_expr
 from .cdjapan import cdjapan_download_images, cdjapan_download_images_expr
 from .cospa import cospa_download_images, cospa_download_images_expr
 from .cospa import cospa_get_item, cospa_get_items, cospa_get_items_expr
+from .curtain_damashii import curtain_damashii_download_images, curtain_damashii_download_images_by_category_id
+from .curtain_damashii import curtain_damashii_download_images_by_tag_id, curtain_damashii_download_images_by_event_id
 from .dezaegg import dezaegg_download_images, dezaegg_download_images_expr
 from .gamers import gamers_download_images, gamers_download_images_expr
 from .goodsmile import goodsmile_download_images, goodsmile_download_images_expr

@@ -205,3 +205,13 @@ def convert_item_ids_to_list(item_ids):
             return None
     else:
         return None
+
+
+def get_image_name_from_image_url(url):
+    split1 = url.split('/')
+    last = split1[-1]
+    if len(last) > 4 and (last[-4:] == '.jpg' or last[-4:] == '.png' or last[-4:] == '.gif'):
+        last = last[0:len(last) - 4]
+    elif len(last) > 5 and (last[-5:] == '.jpeg') or last[-5:] == '.webp':
+        last = last[0:len(last) - 5]
+    return last

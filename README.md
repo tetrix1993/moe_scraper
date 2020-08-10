@@ -274,6 +274,81 @@ moe_scraper.cospa_download_images_expr('100719,101021,100407-100409', save_jan_c
 ```
 </details>
 
+### Curtain Damashii
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Curtain Damashii](https://www.curtain-damashii.com/) is a Japanese manufacturer that sells anime merchandises specializing in curtains. It also sells wall scrolls, pillow cases, dakimakura covers, bed sheets etc.
+
+#### function curtain_damashii_download_images
+The `curtain_damashii_download_images` function download items by item IDs. The item ID can be obtained from the item URL. E.g. `tape_teibo01-b2` in `https://www.curtain-damashii.com/item/tape_teibo01-b2/`.
+
+The function accepts one argument:
+* `item_ids` - List of Item IDs in string
+
+The output will be saved in the directory that is specified at `CURTAIN_DAMASHII_OUTPUT_IMAGE_FOLDER` in `app.config`.
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products of item ID tape_teibo01-b2 and tape_fgob12-b2
+moe_scraper.curtain_damashii_download_images(['tape_teibo01-b2', 'tape_fgob12-b2'])
+```
+
+#### function curtain_damashii_download_images_by_category_id
+The `curtain_damashii_download_images_by_category_id` function downloads items that belongs to the category ID. The category ID can be obtained from the URL.
+
+Example: Category ID `towel` in `https://www.curtain-damashii.com/item/category/towel/`
+
+The function accepts two arguments:
+* `category_id` - Category ID of the category in string
+* `pages` - (Optional) Maximum number of pages for the scraper to search
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products belonging to 'towel' category up to the first page
+moe_scraper.curtain_damashii_download_images_by_category_id('towel', pages=1)
+```
+
+#### function curtain_damashii_download_images_by_tag_id
+The `curtain_damashii_download_images_by_tag_id` function downloads items that belongs to the tag ID. The tag ID can be obtained from the URL.
+
+Example: Tag ID `kanokari` in `https://www.curtain-damashii.com/item/tag/kanokari/`
+
+The function accepts two arguments:
+* `tag_id` - Tag ID of the tag in string
+* `pages` - (Optional) Maximum number of pages for the scraper to search
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products belonging to 'kanokari' tag up to the first page
+moe_scraper.curtain_damashii_download_images_by_tag_id('kanokari', pages=1)
+```
+
+#### function curtain_damashii_download_images_by_event_id
+The `curtain_damashii_download_images_by_event_id` function downloads items that belongs to the event ID. The event ID can be obtained from the URL.
+
+Example: Tag ID `kanokari` in `https://www.curtain-damashii.com/item/tag/kanokari/`
+
+The function accepts two arguments:
+* `event_id` - Event ID of the event in string
+* `pages` - (Optional) Maximum number of pages for the scraper to search
+
+Example:
+```python
+import moe_scraper
+
+# Download images of products belonging to 'c98' event up to the first page
+moe_scraper.curtain_damashii_download_images_by_event_id('c98', pages=1)
+```
+</details>
+
 ### Dezaegg (License Agent)
 <details>
 <summary>Click to expand...</summary>
