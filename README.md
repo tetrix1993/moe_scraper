@@ -350,7 +350,31 @@ moe_scraper.curtain_damashii_download_images_by_event_id('c98', pages=1)
 </details>
 
 ### Dengekiya
+<details>
+<summary>Click to expand...</summary>
+<br/>
+
+[Dengekiya](https://dengekiya.com/) - To be updated.
+
+#### function dengekiya_download_images
 To be updated.
+
+#### function dengekiya_download_images_by_series
+To be updated.
+
+#### function dengekiya_download_images_by_magazine
+To be updated.
+
+#### function dengekiya_download_images_by_item_type
+To be updated.
+
+#### function dengekiya_download_images_preorder
+To be updated.
+
+#### function dengekiya_download_images_new_item
+To be updated.
+
+</details>
 
 ### Dezaegg (License Agent)
 <details>
