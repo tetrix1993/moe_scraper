@@ -216,5 +216,12 @@ def get_image_name_from_image_url(url):
     return last
 
 
-def get_datetime_now_str():
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+def get_datetime_now_str(day_separator='', middle_separator='', time_separator=''):
+    _format = '%Y' + day_separator + '%m' + day_separator + '%d'
+    _format += middle_separator
+    _format += '%H' + time_separator + '%M' + time_separator + '%S'
+    return datetime.now().strftime(_format)
+
+
+def get_today_date_str(separator=''):
+    return datetime.today().strftime('%Y' + separator + '%m' + separator + '%d')

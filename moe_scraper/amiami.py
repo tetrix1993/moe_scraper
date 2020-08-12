@@ -183,7 +183,7 @@ def amiami_scan_front_page_new_items_jp():
     return items
 
 
-def amiami_output_front_page_result(is_english=False, updated_date=None):
+def amiami_output_front_page_result(updated_date=None, is_english=False):
     config = read_config_file()
     if AMIAMI_OUTPUT_FRONT_PAGE_RESULT_FOLDER not in config:
         print('%s not found in app.config' % AMIAMI_OUTPUT_FRONT_PAGE_RESULT_FOLDER)
@@ -201,7 +201,7 @@ def amiami_output_front_page_result(is_english=False, updated_date=None):
 
     with open(output_file, 'a+', encoding='utf-8') as f:
         f.write('===================\n')
-        f.write(get_datetime_now_str() + '\n')
+        f.write(get_datetime_now_str('-', ' ', ':') + '\n')
         f.write('===================\n\n')
     for item in items:
         if (updated_date and updated_date == item['updated_date']) or updated_date is None:
