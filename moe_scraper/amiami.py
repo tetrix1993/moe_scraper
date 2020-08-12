@@ -34,6 +34,21 @@ AMIAMI_CATEGORY_TOY_SCL2_LENGTH = 5
 AMIAMI_CATEGORY_TOY_SCL3_LENGTH = 5
 
 
+class AmiAmiItem:
+
+    def __init__(self, id, category, name, updated_date):
+        self.id = id
+        self.category = category
+        self.name = name
+        self.updated_date = updated_date
+
+    def __iter__(self):
+        yield 'id', self.id
+        yield 'category', self.category
+        yield 'name', self.name
+        yield 'updated_date', self.updated_date
+
+
 def amiami_download_images(item_ids, category, save_jan_code=False):
     config = read_config_file()
     if AMIAMI_OUTPUT_IMAGE_FOLDER not in config:
@@ -134,3 +149,63 @@ def get_category_length(category):
         return AMIAMI_CATEGORY_TOY_SCL3_LENGTH
     else:
         return 0
+
+
+def amiami_scan_front_page_new_items(is_english=False):
+    if is_english:
+        return [] # To be updated
+    else:
+        return amiami_scan_front_page_new_items_jp()
+
+
+def amiami_scan_front_page_new_items_jp():
+    soup = get_soup('https://amiami.jp/txt/item/index_all.html')
+    top_updatedates = soup.find_all('div', class_='top_updatedate')
+    items = []
+    for top_updatedate in top_updatedates:
+        if len(top_updatedate['class']) != 2:
+            continue
+        date_str = top_updatedate['class'][1].replace('update', '')
+        products = soup.select('div.product_box.update' + date_str)
+        for product in products:
+            a_tag = product.find('a')
+            if a_tag and a_tag.has_attr('href') and a_tag.has_attr('title'):
+                title = a_tag['title']
+                if 'gcode=' in a_tag['href']:
+                    code = a_tag['href'].split('gcode=')[1].split('&')[0]
+                    if '-' in code:
+                        split1 = code.split('-')
+                        id = split1[-1]
+                        category = ''
+                        for i in range(len(split1) - 1):
+                            category += split1[i]
+                        items.append(dict(AmiAmiItem(id, category, title, date_str)))
+    return items
+
+
+def amiami_output_front_page_result(is_english=False, updated_date=None):
+    config = read_config_file()
+    if AMIAMI_OUTPUT_FRONT_PAGE_RESULT_FOLDER not in config:
+        print('%s not found in app.config' % AMIAMI_OUTPUT_FRONT_PAGE_RESULT_FOLDER)
+        return
+
+    output_folder = config[AMIAMI_OUTPUT_FRONT_PAGE_RESULT_FOLDER]
+    output_file = config[AMIAMI_OUTPUT_FRONT_PAGE_RESULT_FOLDER] + '/' + config[AMIAMI_OUTPUT_FRONT_PAGE_RESULT_NAME]
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    items = amiami_scan_front_page_new_items(is_english)
+    if len(items) == 0:
+        return
+
+    with open(output_file, 'a+', encoding='utf-8') as f:
+        f.write('===================\n')
+        f.write(get_datetime_now_str() + '\n')
+        f.write('===================\n\n')
+    for item in items:
+        if (updated_date and updated_date == item['updated_date']) or updated_date is None:
+            with open(output_file, 'a+', encoding='utf-8') as f:
+                f.write(item['category'] + '-' + item['id'] + '\t' + item['name'] + '\n')
+    with open(output_file, 'a+', encoding='utf-8') as f:
+        f.write('\n\n\n')

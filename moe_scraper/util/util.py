@@ -214,3 +214,7 @@ def get_image_name_from_image_url(url):
     elif len(last) > 5 and (last[-5:] == '.jpeg') or last[-5:] == '.webp':
         last = last[0:len(last) - 5]
     return last
+
+
+def get_datetime_now_str():
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
